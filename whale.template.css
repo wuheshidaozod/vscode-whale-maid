@@ -1,0 +1,348 @@
+/*
+ * 深海女仆工坊 · VS Code 版
+ * 由 build.py 生成 whale.css：模板里的 art 占位符会被替换成内嵌的 data URI。
+ * 修改本模板后运行 build.py，再在 VS Code 里执行 "Reload Custom CSS and JS"。
+ *
+ * 布局参照 dsh-deep-whale 的 maid-atelier：
+ *   编辑区是"舞台"——宫殿和两位女仆在最底层，代码区半透明盖在上面；
+ *   侧边栏是金框深蓝面板，四角金色角花，底部 Q 版女仆和蕾丝垂花；
+ *   顶部深蓝金线饰带 + 白蕾丝 + 蝴蝶结，底部金色徽饰。
+ *
+ * 美术：上善（鲸鱼娘原案）、ZipZipPipe（女仆改设）· CC BY-NC-SA 4.0
+ * 来源：https://github.com/Small-tailqwq/dsh-deep-whale
+ */
+
+:root {
+  /* ── 可调参数 ── */
+  --whale-stage-veil: 0.50;      /* 盖在女仆上的深蓝薄纱：越大代码越清楚、女仆越淡 */
+  --whale-palace-veil: 0.40;     /* 额外压暗宫殿背景 */
+  --whale-editor-glass: 0.28;    /* 代码区自身的底色不透明度 */
+  --whale-sidebar-mascot: 0.6;   /* 侧边栏 Q 版女仆 */
+
+  --whale-gold: #c5a468;
+  --whale-gold-soft: #e2cfaa;
+  --whale-navy: #0b193f;
+  --whale-ink: #080f27;
+  --whale-serif: Georgia, "Noto Serif SC", "Source Han Serif SC", "Microsoft YaHei UI", serif;
+
+  /* ── 素材（每张图只内嵌一次）── */
+  --whale-palace: art(palace);
+  --whale-maid-left: art(maidLeft);
+  --whale-maid-right: art(maidRight);
+  --whale-chibi: art(mascot-dizzy);
+  --whale-swag: art(swag);
+  --whale-bow: art(bow);
+  --whale-shield: art(shield);
+  --whale-lace: art(lace);
+  --whale-trim: art(trim);
+  --whale-navy-band: art(navyBand);
+  --whale-lace-band: art(laceBand);
+  --whale-ribbon: art(ribbon);
+  --whale-crest: art(crest);
+  --whale-corner-tl: art(cornerTL);
+  --whale-corner-tr: art(cornerTR);
+  --whale-corner-bl: art(cornerBL);
+  --whale-corner-br: art(cornerBR);
+}
+
+.monaco-workbench {
+  background-color: var(--whale-ink);
+}
+
+/* ═══════════════ 舞台：编辑区背后的宫殿与女仆 ═══════════════ */
+
+.monaco-workbench .part.editor {
+  background:
+    linear-gradient(rgba(8, 15, 39, var(--whale-stage-veil)), rgba(8, 15, 39, var(--whale-stage-veil))),
+    var(--whale-maid-right) right 3% bottom 0 / auto 88% no-repeat,
+    var(--whale-maid-left) left 2% bottom 0 / auto 84% no-repeat,
+    linear-gradient(rgba(8, 15, 39, var(--whale-palace-veil)), rgba(8, 15, 39, var(--whale-palace-veil))),
+    var(--whale-palace) center bottom / cover no-repeat,
+    var(--whale-ink) !important;
+}
+
+/* 编辑区内部改为半透明，让舞台透出来 */
+.monaco-workbench .part.editor {
+  --vscode-editor-background: rgba(10, 22, 54, var(--whale-editor-glass));
+  --vscode-editorGutter-background: transparent;
+  --vscode-editorGroupHeader-tabsBackground: rgba(6, 13, 36, 0.82);
+  --vscode-editorGroupHeader-noTabsBackground: rgba(6, 13, 36, 0.82);
+  --vscode-tab-inactiveBackground: transparent;
+  --vscode-tab-unfocusedInactiveBackground: transparent;
+  --vscode-tab-activeBackground: rgba(16, 36, 86, 0.78);
+  --vscode-tab-unfocusedActiveBackground: rgba(16, 36, 86, 0.6);
+  --vscode-breadcrumb-background: rgba(8, 15, 39, 0.55);
+  --vscode-editorPane-background: transparent;
+}
+.monaco-workbench .part.editor > .content,
+.monaco-workbench .part.editor .editor-group-container,
+.monaco-workbench .part.editor .editor-group-container > .editor-container,
+.monaco-workbench .part.editor .editor-group-watermark {
+  background-color: transparent !important;
+}
+.monaco-workbench .part.editor .monaco-editor,
+.monaco-workbench .part.editor .monaco-editor .monaco-editor-background,
+.monaco-workbench .part.editor .monaco-editor .margin,
+.monaco-workbench .part.editor .monaco-editor .inputarea.ime-input {
+  background-color: rgba(10, 22, 54, var(--whale-editor-glass)) !important;
+}
+.monaco-workbench .part.editor .monaco-editor .margin {
+  background-color: transparent !important;
+}
+.monaco-workbench .part.editor .editor-group-container > .title,
+.monaco-workbench .part.editor .editor-group-container > .title .tabs-and-actions-container {
+  background-color: rgba(6, 13, 36, 0.82) !important;
+}
+.monaco-workbench .part.editor .tabs-container > .tab {
+  font-family: var(--whale-serif);
+}
+.monaco-workbench .part.editor .tabs-container > .tab:not(.active) {
+  background-color: transparent !important;
+}
+
+/* 空编辑器：水印换成鲸鱼徽章 */
+.monaco-workbench .part.editor .editor-group-watermark > .letterpress {
+  background-image: var(--whale-shield) !important;
+  background-size: contain !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  filter: drop-shadow(0 6px 18px rgba(2, 7, 24, 0.5)) !important;
+  opacity: 0.95;
+}
+.monaco-workbench .part.editor .editor-group-watermark .shortcuts dl {
+  font-family: var(--whale-serif);
+  color: var(--whale-gold-soft);
+}
+
+/* ═══════════════ 顶部：深蓝金线饰带 + 白蕾丝 + 蝴蝶结 ═══════════════ */
+
+.monaco-workbench .part.titlebar {
+  background:
+    var(--whale-navy-band) left bottom / auto 100% repeat-x,
+    var(--whale-ink) !important;
+  overflow: visible !important;
+  z-index: 40;
+}
+/* 蕾丝从标题栏下沿垂下来，盖住标签栏最上面几像素（不挡点击） */
+.monaco-workbench .part.titlebar::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -11px;
+  height: 13px;
+  pointer-events: none;
+  z-index: 41;
+  background: var(--whale-lace-band) left top / auto 13px repeat-x;
+  filter: drop-shadow(0 2px 2px rgba(2, 7, 24, 0.35));
+}
+.monaco-workbench .part.titlebar::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -16px;
+  width: 54px;
+  height: 25px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 42;
+  background: var(--whale-bow) center / contain no-repeat;
+  filter: drop-shadow(0 3px 5px rgba(4, 11, 35, 0.4));
+}
+.monaco-workbench .part.titlebar .window-title,
+.monaco-workbench .part.titlebar .menubar .menubar-menu-button {
+  font-family: var(--whale-serif);
+  color: var(--whale-gold-soft);
+}
+/* 中间的搜索框（命令中心）做成瓷白描金 */
+.monaco-workbench .part.titlebar .command-center .command-center-center {
+  background: rgba(248, 246, 240, 0.1) !important;
+  border: 1px solid rgba(226, 207, 170, 0.6) !important;
+  border-radius: 8px !important;
+}
+
+/* ═══════════════ 侧边栏：金框深蓝面板 ═══════════════ */
+
+.monaco-workbench .part.sidebar {
+  background:
+    radial-gradient(circle at 50% 14%, rgba(91, 119, 188, 0.23), transparent 31%),
+    linear-gradient(180deg, rgba(16, 36, 86, 0.98), rgba(5, 14, 43, 0.98)),
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.026) 0 1px, transparent 1px 7px),
+    #0a173b !important;
+  box-shadow:
+    inset -1px 0 rgba(255, 245, 215, 0.82),
+    inset -3px 0 rgba(226, 207, 166, 0.72),
+    8px 0 34px rgba(8, 17, 48, 0.3);
+  --vscode-sideBar-background: transparent;
+  --vscode-sideBarSectionHeader-background: transparent;
+}
+.monaco-workbench .part.sidebar .content,
+.monaco-workbench .part.sidebar .pane-body,
+.monaco-workbench .part.sidebar .monaco-list,
+.monaco-workbench .part.sidebar .monaco-list-rows,
+.monaco-workbench .part.sidebar .composite.title {
+  background-color: transparent !important;
+}
+
+/* 金色细框 + 四角角花 */
+.monaco-workbench .part.sidebar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 30;
+  background:
+    var(--whale-corner-tl) left 1px top 1px / 130px 130px no-repeat,
+    var(--whale-corner-tr) right 4px top 1px / 130px 130px no-repeat,
+    var(--whale-corner-bl) left 1px bottom 1px / 130px 130px no-repeat,
+    var(--whale-corner-br) right 4px bottom 1px / 130px 130px no-repeat,
+    linear-gradient(90deg, rgba(238, 210, 153, 0.94), rgba(190, 145, 75, 0.96), rgba(238, 210, 153, 0.94)) left 62px top 8.5px / calc(100% - 127px) 1.25px no-repeat,
+    linear-gradient(90deg, rgba(238, 210, 153, 0.94), rgba(190, 145, 75, 0.96), rgba(238, 210, 153, 0.94)) left 62px bottom 8.5px / calc(100% - 127px) 1.25px no-repeat,
+    linear-gradient(180deg, rgba(238, 210, 153, 0.94), rgba(190, 145, 75, 0.96), rgba(238, 210, 153, 0.94)) left 8px top 62px / 1.35px calc(100% - 124px) no-repeat,
+    linear-gradient(180deg, rgba(238, 210, 153, 0.94), rgba(190, 145, 75, 0.96), rgba(238, 210, 153, 0.94)) right 11px top 62px / 1.35px calc(100% - 124px) no-repeat;
+  filter: drop-shadow(0 1px 1px rgba(2, 7, 24, 0.42));
+}
+
+/* Q 版女仆 + 蕾丝垂花：贴在第一个分区（文件树）的底部，不会压到"大纲/时间线" */
+.monaco-workbench .part.sidebar .split-view-view:first-child > .pane > .pane-body {
+  position: relative;
+  isolation: isolate; /* 让下面的 z-index:-1 垫在文件树后面 */
+}
+.monaco-workbench .part.sidebar .split-view-view:first-child > .pane > .pane-body::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  right: 6px;
+  bottom: 0;
+  height: min(190px, 55%);
+  pointer-events: none;
+  z-index: -1;
+  background:
+    var(--whale-swag) center bottom 2px / 96% auto no-repeat,
+    var(--whale-chibi) center bottom 18px / auto calc(100% - 40px) no-repeat;
+  opacity: var(--whale-sidebar-mascot);
+  filter: drop-shadow(0 5px 12px rgba(2, 7, 24, 0.3));
+}
+/* 内容留出边框的位置，并压在女仆上面 */
+.monaco-workbench .part.sidebar > .content {
+  position: relative;
+  z-index: 2;
+}
+
+/* 标题与分区标题：衬线体 + 金色 */
+.monaco-workbench .part.sidebar > .title .title-label {
+  padding-left: 14px !important;
+}
+.monaco-workbench .part.sidebar > .title .title-label h2 {
+  font-family: var(--whale-serif);
+  color: var(--whale-gold-soft) !important;
+  letter-spacing: 0.08em;
+}
+.monaco-workbench .part.sidebar .pane-header {
+  font-family: var(--whale-serif);
+  color: var(--whale-gold-soft) !important;
+  border-top: 1px solid rgba(197, 164, 104, 0.35) !important;
+  background: linear-gradient(90deg, transparent, rgba(197, 164, 104, 0.1), transparent) !important;
+}
+.monaco-workbench .part.sidebar .monaco-list-row {
+  font-family: var(--whale-serif);
+  text-shadow: 0 1px 2px rgba(2, 7, 24, 0.95), 0 0 4px rgba(2, 7, 24, 0.8);
+}
+
+/* 选中行：深蓝缎带 */
+.monaco-workbench .part.sidebar .monaco-list-row.selected,
+.monaco-workbench .part.sidebar .monaco-list:focus .monaco-list-row.selected {
+  background: var(--whale-ribbon) left center / 100% 100% no-repeat !important;
+  color: #fff4d9 !important;
+}
+.monaco-workbench .part.sidebar .monaco-list-row:hover:not(.selected) {
+  background-color: rgba(197, 164, 104, 0.12) !important;
+}
+
+/* ═══════════════ 活动栏 ═══════════════ */
+
+.monaco-workbench .part.activitybar {
+  background: linear-gradient(180deg, #0c1c48, #060d26) !important;
+  box-shadow: inset -1px 0 rgba(197, 164, 104, 0.45);
+}
+.monaco-workbench .part.activitybar::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  width: 30px;
+  height: 40px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  background: var(--whale-shield) center / contain no-repeat;
+  opacity: 0.75;
+}
+
+/* ═══════════════ 底部面板（终端）═══════════════ */
+
+.monaco-workbench .part.panel::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 9px;
+  pointer-events: none;
+  z-index: 10;
+  background: var(--whale-lace) left top / auto 9px repeat-x;
+  opacity: 0.5;
+}
+
+/* ═══════════════ 编辑区底部：金线 + 中央金色徽饰 ═══════════════ */
+
+.monaco-workbench .part.editor::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 30px;
+  pointer-events: none;
+  z-index: 60;
+  background:
+    var(--whale-crest) center bottom 1px / auto 28px no-repeat,
+    linear-gradient(90deg, transparent, rgba(226, 207, 170, 0.85) 20%, rgba(226, 207, 170, 0.85) 80%, transparent) center bottom 6px / 100% 1px no-repeat;
+  filter: drop-shadow(0 2px 4px rgba(2, 7, 24, 0.5));
+}
+
+/* ═══════════════ 状态栏：深蓝缎带 ═══════════════ */
+
+.monaco-workbench .part.statusbar {
+  background-image: var(--whale-trim) !important;
+  background-size: auto 100% !important;
+  background-repeat: repeat-x !important;
+  border-top: 1px solid rgba(197, 164, 104, 0.6);
+  overflow: visible !important;
+}
+
+
+/* ═══════════════ 弹出层：金边圆角 ═══════════════ */
+
+.monaco-workbench .quick-input-widget,
+.monaco-workbench .monaco-hover,
+.monaco-workbench .suggest-widget,
+.monaco-workbench .monaco-dialog-box,
+.monaco-workbench .notification-toast {
+  border: 1px solid rgba(197, 164, 104, 0.6) !important;
+  border-radius: 10px !important;
+  box-shadow: 0 8px 28px rgba(3, 8, 24, 0.6) !important;
+}
+.monaco-workbench .quick-input-widget {
+  overflow: hidden;
+}
+.monaco-workbench .quick-input-widget::before {
+  content: "";
+  display: block;
+  height: 8px;
+  background: var(--whale-lace) left top / auto 8px repeat-x;
+  opacity: 0.5;
+}
+
+.monaco-scrollable-element > .scrollbar > .slider {
+  border-radius: 6px;
+}
