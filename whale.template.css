@@ -330,16 +330,8 @@
   border-radius: 10px !important;
   box-shadow: 0 8px 28px rgba(3, 8, 24, 0.6) !important;
 }
-.monaco-workbench .quick-input-widget {
-  overflow: hidden;
-}
-.monaco-workbench .quick-input-widget::before {
-  content: "";
-  display: block;
-  height: 8px;
-  background: var(--whale-lace) left top / auto 8px repeat-x;
-  opacity: 0.5;
-}
+/* 注意：VS Code 1.143 起，命令面板、悬浮提示、对话框、通知的毛玻璃背景画在它们自己的
+   ::before 上，这里不能再占用这些元素的 ::before，否则背景会变透明。 */
 
 .monaco-scrollable-element > .scrollbar > .slider {
   border-radius: 6px;
