@@ -231,7 +231,7 @@
 
 /* 标题与分区标题：衬线体 + 金色 */
 .monaco-workbench .part.sidebar > .title .title-label {
-  padding-left: 14px !important;
+  padding-left: 22px !important;
 }
 .monaco-workbench .part.sidebar > .title .title-label h2 {
   font-family: var(--whale-serif);
@@ -293,31 +293,29 @@
   opacity: 0.5;
 }
 
-/* ═══════════════ 编辑区底部：金线 + 中央金色徽饰 ═══════════════ */
+/* ═══════════════ 底部：两道金线的深蓝饰带 + 中央金色徽饰 ═══════════════ */
 
-.monaco-workbench .part.editor::after {
+/* 与原版一致：饰带素材自带上沿两道金线，下面是深蓝。按原版 30px 高度铺，
+   状态栏只露出上面 22px，两道金线正好落在状态栏顶端。不再另画边框线。 */
+.monaco-workbench .part.statusbar {
+  background: var(--whale-trim) left top / auto 30px repeat-x, #040b24 !important;
+  border-top: 0 !important;
+  overflow: visible !important;
+  z-index: 35;
+}
+/* 徽饰骑在金线上，上半截伸进编辑区 */
+.monaco-workbench .part.statusbar::before {
   content: "";
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 30px;
+  left: 50%;
+  top: -18px;
+  width: 62px;
+  height: 36px;
+  transform: translateX(-50%);
   pointer-events: none;
-  z-index: 60;
-  background:
-    var(--whale-crest) center bottom 1px / auto 28px no-repeat,
-    linear-gradient(90deg, transparent, rgba(226, 207, 170, 0.85) 20%, rgba(226, 207, 170, 0.85) 80%, transparent) center bottom 6px / 100% 1px no-repeat;
-  filter: drop-shadow(0 2px 4px rgba(2, 7, 24, 0.5));
-}
-
-/* ═══════════════ 状态栏：深蓝缎带 ═══════════════ */
-
-.monaco-workbench .part.statusbar {
-  background-image: var(--whale-trim) !important;
-  background-size: auto 100% !important;
-  background-repeat: repeat-x !important;
-  border-top: 1px solid rgba(197, 164, 104, 0.6);
-  overflow: visible !important;
+  z-index: 36;
+  background: var(--whale-crest) center / contain no-repeat;
+  filter: drop-shadow(0 3px 6px rgba(4, 11, 35, 0.4));
 }
 
 
