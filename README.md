@@ -2,6 +2,8 @@
 
 把 [dsh-deep-whale](https://github.com/Small-tailqwq/dsh-deep-whale) 的 **maid-atelier（深海女仆工坊）** 皮肤移植到 VS Code：
 
+![效果图](screenshots/preview.webp)
+
 - **舞台**：编辑区背后是夜之宫殿和两位鲸鱼娘女仆，代码区半透明叠在上面
 - **侧边栏**：金框深蓝面板、四角金色角花、深蓝缎带选中行、底部 Q 版鲸鱼娘和蕾丝垂花
 - **顶部**：深蓝金线饰带 + 白蕾丝 + 蝴蝶结；**底部**：金线与金色徽饰
